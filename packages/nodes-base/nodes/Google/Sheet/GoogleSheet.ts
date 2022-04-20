@@ -490,7 +490,7 @@ export class GoogleSheet {
 			keyColumnOrder.forEach((key) => {
 				if (usePathForKeyRow && (get(item, key) !== undefined)) { //match by key path
 					rowData.push(get(item, key)!.toString());
-				} else if (!usePathForKeyRow && (item.hasOwnProperty(key) && (item[key] != undefined))) { //match by exact key name
+				} else if (!usePathForKeyRow && item.hasOwnProperty(key) && item[key] !== null && item[key] !== undefined) { //match by exact key name
 					rowData.push(item[key]!.toString());
 				} else {
 					rowData.push('');
