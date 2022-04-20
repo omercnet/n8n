@@ -663,10 +663,22 @@ export class GoogleSheets implements INodeType {
 						default: 'UNFORMATTED_VALUE',
 						description: 'Determines how values should be rendered in the output.',
 					},
-
+					{
+						displayName: 'Use header names as JSON paths',
+						name: 'usePathForKeyRow',
+						type: 'boolean',
+						default: false,
+						displayOptions: {
+							show: {
+								'/operation': [
+									'append',
+								],
+							},
+						},
+						description: 'Enable if you want to match the headers as path, for example, the row header "category.name" will match the "category" object and get the field "name" from it. By default "category.name" will match with the field with exact name, not nested object.',
+					},
 				],
 			},
-
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -1078,8 +1090,10 @@ export class GoogleSheets implements INodeType {
 						setData.push(item.json);
 					});
 
+					const usePathForKeyRow = (options.usePathForKeyRow || false) as boolean;
+
 					// Convert data into array format
-					const data = await sheet.appendSheetData(setData, sheet.encodeRange(range), keyRow, valueInputMode);
+					const data = await sheet.appendSheetData(setData, sheet.encodeRange(range), keyRow, valueInputMode, usePathForKeyRow);
 
 					// TODO: Should add this data somewhere
 					// TODO: Should have something like add metadata which does not get passed through
