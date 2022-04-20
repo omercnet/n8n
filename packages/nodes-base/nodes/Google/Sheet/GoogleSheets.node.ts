@@ -664,7 +664,7 @@ export class GoogleSheets implements INodeType {
 						description: 'Determines how values should be rendered in the output.',
 					},
 					{
-						displayName: 'Use header names as JSON paths',
+						displayName: 'Use Header Names as JSON Paths',
 						name: 'usePathForKeyRow',
 						type: 'boolean',
 						default: false,
